@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    container_name: app
+    build: ./web
+    ports: 
+      - '5000:5000'
+    links:
+      - db
+    volumes:
+      - ./web:/usr/src/app
+  db:
+    image : mongo
+    container_name: db
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./DB/db:/data/db
+    ports:
+      - 27017:27017
+    restart: unless-stopped
